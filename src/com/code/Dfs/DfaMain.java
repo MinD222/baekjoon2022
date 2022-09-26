@@ -39,7 +39,7 @@ public class DfaMain {
             graph.get(y).add(x);
         }
         for(int i=0;i< graph.size();i++){
-            Collections.sort(graph.get(i));
+            Collections.sort(graph.get(i),Collections.reverseOrder());
         }
         cnt =1;
         dfs(R);
