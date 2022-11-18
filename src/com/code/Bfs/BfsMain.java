@@ -3,7 +3,7 @@ package com.code.Bfs;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /**
  오늘도 서준이는 너비 우선 탐색(BFS) 수업 조교를 하고 있다. 아빠가 수업한 내용을 학생들이 잘 이해했는지 문제를 통해서 확인해보자.
@@ -29,18 +29,63 @@ import java.util.StringTokenizer;
  */
 
 public class BfsMain {
+    static int V, E, R, cnt;
+    static boolean[] visited;
+    static int[] seq;
+    static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-        int V = Integer.parseInt(st.nextToken()); // 정점의 수
-        int E = Integer.parseInt(st.nextToken()); // 간선의 수
-        int R = Integer.parseInt(st.nextToken()); // 시작 정점
+        V = Integer.parseInt(st.nextToken()); // 정점의 수
+        E = Integer.parseInt(st.nextToken()); // 간선의 수
+        R = Integer.parseInt(st.nextToken()); // 시작 정점
 
+        visited = new boolean[V+1];
+        seq = new int[V+1];
 
+        // 1. 인접리스트 만들기
+        //인접리스트 초기화
+        for(int i=0;i<V+1;i++){
+            graph.add(new ArrayList<>());
+        }
+        // 간선 수 만큼 인접 리스트 add (문제에서 입력받은 두 자리의 간선 수 만큼)
+        for(int i=0;i<E;i++){
+            StringTokenizer st2 = new StringTokenizer(br.readLine(), " ");
+            int x =  Integer.parseInt(st2.nextToken());
+            int y =  Integer.parseInt(st2.nextToken());
+            graph.get(x).add(y);
+            graph.get(y).add(x);
+        }
 
+        for(int i=0;i< graph.size();i++){
+            Collections.sort(graph.get(i));
+        }
+
+        cnt =1;
+        Queue<Integer> queue = new LinkedList<>();
+        bfs(R, queue);
+
+        for(int i=1;i<seq.length;i++){
+            System.out.println(seq[i]);
+        }
     }
 
-    public void Bfs(){
-
+    public static void bfs(int R,Queue<Integer> queue){
+        visited[R] = true;
+        seq[R] = cnt;
+        queue.offer(R);
+        // 큐 반복
+        while (queue.size() != 0){
+            R = queue.poll();
+            // 그래프 반복
+            for (int nextR : graph.get(R)) {
+                if (!visited[nextR]) {
+                    cnt++;
+                    visited[nextR] = true;
+                    seq[nextR] = cnt;
+                    queue.offer(nextR);
+                }
+            }
+        }
     }
 }
