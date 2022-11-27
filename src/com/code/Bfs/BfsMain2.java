@@ -3,8 +3,7 @@ package com.code.Bfs;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /**
  문제
@@ -21,8 +20,10 @@ import java.util.StringTokenizer;
 public class BfsMain2 {
     static int V, E, R, cnt;
     static boolean[] visited;
-    static int[] seq;
+    //static int[] resultBfs;
     static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+    static StringBuilder resultBfs = new StringBuilder();
+    static StringBuilder resultDfs = new StringBuilder();
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
@@ -30,9 +31,54 @@ public class BfsMain2 {
         E = Integer.parseInt(st.nextToken()); // 간선의 수
         R = Integer.parseInt(st.nextToken()); // 시작 정점
 
+        visited = new boolean[V+1];
+       // resultBfs = new int[V+1];
+
+        for(int i=0;i<V+1;i++){
+            graph.add(new ArrayList<>());
+        }
+
+        // 그래프 생성
+        for(int i=0;i<E;i++){
+            StringTokenizer st2 = new StringTokenizer(br.readLine(), " ");
+            int x =  Integer.parseInt(st2.nextToken());
+            int y =  Integer.parseInt(st2.nextToken());
+            graph.get(x).add(y);
+            graph.get(y).add(x);
+        }
+
+        for(int i=0;i< graph.size();i++){
+            Collections.sort(graph.get(i));
+        }
+        bfs(R);
+        visited = new boolean[V+1];
+        dfs(R);
+        System.out.println(resultDfs);
+        System.out.println(resultBfs);
     }
-
-    static void bfs(){
-
+    static void dfs(int R){
+        visited[R]=true;
+        resultDfs.append(R+" ");
+        for(int nextR:graph.get(R)){
+            if(!visited[nextR]){
+                visited[nextR]=true;
+                dfs(nextR);
+            }
+        }
+    }
+    static void bfs(int R){
+        Queue<Integer> queue = new LinkedList<>();
+        visited[R]=true;
+        queue.offer(R);
+        while (queue.size()!=0){
+            R = queue.poll();
+            resultBfs.append(R+" ");
+            for(int nextR : graph.get(R)){
+                if(!visited[nextR]){
+                    visited[nextR]=true;
+                    queue.offer(nextR);
+                }
+            }
+        }
     }
 }
