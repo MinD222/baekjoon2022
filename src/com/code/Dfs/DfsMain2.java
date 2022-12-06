@@ -24,8 +24,8 @@ public class DfsMain2 {
     static ArrayList<Integer> result =new ArrayList<>();
     static boolean[][] visited;
     static StringBuilder sb = new StringBuilder();
-    static int[] dirX={0,0,-1,-1};// 좌우
-    static int[] dirY={-1,-1,0,0};// 상하
+    static int[] dirX={0,0,1,-1};// 좌우
+    static int[] dirY={1,-1,0,0};// 상하
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -35,8 +35,7 @@ public class DfsMain2 {
 
         // 인접 행렬 그래프
         for(int i=0;i<V;i++){
-            BufferedReader br2 = new BufferedReader(new InputStreamReader(System.in));
-            String line = br2.readLine();
+            String line = br.readLine();
             for(int j=0;j<V;j++){
                 graph[i][j]=line.charAt(j)-'0';
             }
@@ -46,6 +45,7 @@ public class DfsMain2 {
         for(int i=0;i<V;i++){
             for(int j=0;j<V;j++){
                 if(!visited[i][j] && graph[i][j]==1){
+                    count=1;
                     dfs(i,j);
                     result.add(count);
                 }
@@ -68,8 +68,9 @@ public class DfsMain2 {
             int nowY = dirY[i] + y;
             if(nowX >= 0 && nowX < V && nowY >= 0 && nowY < V && visited[nowX][nowY] == false && graph[nowX][nowY] == 1){
                 visited[nowX][nowY]=true;
-                dfs(nowX, nowY);
                 count++;
+                dfs(nowX, nowY);
+
             }
         }
     }
