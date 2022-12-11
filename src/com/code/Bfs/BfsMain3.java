@@ -22,28 +22,34 @@ public class BfsMain3 {
             System.out.println("0"); // 이 부분에서 오답처리를 받았다. 예외의 경우를 항상 생각하자.
             return;
         }
+        if(N>=M){
+            System.out.println(N-M); // 동생이 수빈이 잡는경우;;
+            return;
+        }
 
-        arr = new int[M+1];
+        arr = new int[100001];
         arr[N]=1;
         Queue queue = new LinkedList();
-        queue.offer(N-1);
-        queue.offer(N+1);
-        queue.offer(N*2);
+     //   queue.offer(N-1);
+     //   queue.offer(N+1);
+     //   queue.offer(N*2);
+        queue.offer(N);
         //while (result==M){
         int i=1;
         while (!queue.isEmpty()){
             i++;
             result = Integer.parseInt(queue.poll().toString());
             //arr[result]=arr[result]+1;
-            if(arr[M]!=0){
-                break;
+           if(result==M){
+               System.out.println(arr[M]-1);
+               return;
             }
             //if(result >0 && result < M) {
-                if (arr[result - 1] == 0 && result-1 > 0 ) {
+                if (result-1 >= 0 && arr[result - 1] == 0 ) {
                     arr[result-1] = arr[result]+1;
                     queue.offer(result - 1);
                 }
-                if (arr[result + 1] == 0 && result+1 >= M) {
+                if (result+1 <= M && arr[result + 1] == 0) {
                     arr[result+1] = arr[result]+1;
                     queue.offer(result + 1);
                 }
@@ -54,6 +60,6 @@ public class BfsMain3 {
             //}
         }
 
-        System.out.println(arr[M]+1);
+        //System.out.println(arr[M]-1);
     }
 }
