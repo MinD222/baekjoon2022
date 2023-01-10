@@ -21,7 +21,7 @@ public class BfsMain2 {
     static int V, E, R, cnt;
     static boolean[] visited;
     //static int[] resultBfs;
-    static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+    static ArrayList<ArrayList<Integer>> graph = new ArrayList<>(); // 인접리스트
     static StringBuilder resultBfs = new StringBuilder();
     static StringBuilder resultDfs = new StringBuilder();
     public static void main(String[] args) throws IOException {
