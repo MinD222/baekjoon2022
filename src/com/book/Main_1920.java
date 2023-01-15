@@ -23,7 +23,7 @@ public class Main_1920 {
 
         M = Integer.parseInt(br.readLine());
         arrM = new int[M];
-        result = new int[M+1];
+        result = new int[M];
         st = new StringTokenizer(br.readLine()," ");
         for(int i=0;i<M;i++){
             arrM[i] = Integer.parseInt(st.nextToken());
@@ -36,6 +36,7 @@ public class Main_1920 {
             System.out.println(r);
         }
     }
+
     static void binary(int n){
         for(int i=0;i<M;i++){
             int m = arrM[i];
@@ -49,7 +50,7 @@ public class Main_1920 {
                     }
                 }
             }else{
-                for(int k=n;k<M;k++){
+                for(int k=n;k<N;k++){
                     if(m==arrN[k]) {
                         result[i]=1;
                     }else{
